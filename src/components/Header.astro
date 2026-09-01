@@ -1,0 +1,33 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { Linkedin } from 'lucide-react';
+import { profile } from '../data/profile';
+
+// Social media: LinkedIn only for now.
+// Uncomment the imports + icons below when you're ready to add more.
+// import { Github, Twitter } from 'lucide-react';
+---
+
+<header class="py-4 flex justify-between items-center" transition:persist>
+  <nav class="hidden md:flex items-center space-x-4">
+    <a href={profile.cv} download class="rounded-full p-2 text-muted-foreground hover:text-primary bg-primary/10 hover:bg-primary/20 transition-colors px-3">
+      CV ↓
+    </a>
+  </nav>
+  <a href="/" class="text-2xl font-bold font-alt" aria-label="Yassin El Jakani home">Yassin El Jakani<span class="text-point">.</span></a>
+  <div class="flex items-center space-x-4">
+    <a href={profile.links.linkedin} class="text-muted-foreground hover:text-primary" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <Linkedin className="w-6 h-6" />
+    </a>
+    <!--
+      More social icons, ready for later — uncomment (and the import above):
+      <a href="https://github.com/YOUR_HANDLE" class="text-muted-foreground hover:text-primary" target="_blank" rel="noopener" aria-label="GitHub">
+        <Github className="w-6 h-6" />
+      </a>
+      <a href="https://x.com/YOUR_HANDLE" class="text-muted-foreground hover:text-primary" target="_blank" rel="noopener" aria-label="Twitter / X">
+        <Twitter className="w-6 h-6" />
+      </a>
+    -->
+    <ThemeToggle />
+  </div>
+</header>

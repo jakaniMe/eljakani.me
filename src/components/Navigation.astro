@@ -1,0 +1,21 @@
+---
+import StickyNavigation from './StickyNavigation';
+import { navItems } from '../data/profile';
+---
+
+<StickyNavigation client:load navItems={navItems} />
+
+<style>
+  :global(.sticky-nav) {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: transform 0.3s ease-in-out;
+    margin-top: 0;
+    padding-top: 0.7rem;
+  }
+
+  :global(.sticky-nav.hidden) {
+    transform: translateY(-100%);
+  }
+</style>

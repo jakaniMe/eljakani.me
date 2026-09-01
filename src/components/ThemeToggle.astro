@@ -1,0 +1,39 @@
+---
+import { Moon, Sun } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+---
+
+<Button variant="ghost" size="icon" id="theme-toggle" className="relative">
+  <Sun className="h-6 w-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+  <Moon className="absolute h-6 w-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+  <span class="sr-only">Toggle theme</span>
+</Button>
+
+<script>
+  function initializeThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    function setTheme(theme: 'light' | 'dark') {
+      html.classList.remove('light', 'dark');
+      html.classList.add(theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    themeToggle?.addEventListener('click', () => {
+      const currentTheme = html.classList.contains('dark') ? 'light' : 'dark';
+      setTheme(currentTheme);
+    });
+
+    // Set initial theme
+    const storedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(storedTheme ?? (prefersDark ? 'dark' : 'light'));
+  }
+
+  // Initialize on first load
+  initializeThemeToggle();
+
+  // Re-initialize on subsequent navigations
+  document.addEventListener('astro:after-swap', initializeThemeToggle);
+</script>

@@ -1,0 +1,122 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import { Icon } from 'astro-icon/components';
+import { positions } from '../data/profile';
+---
+
+<section id="positions" class="py-16">
+    <h3 class="text-4xl font-bold mb-10 text-foreground font-alt">Positions</h3>
+    <div class="space-y-5">
+        {positions.map((pos, index) => (
+                <Card className="bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-lg border overflow-hidden transition-all duration-300 hover:shadow-xl group">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-stretch">
+                        <div class="flex-shrink-0 w-full sm:w-auto sm:flex-grow-0 p-5 flex items-center justify-center bg-muted/20 rounded-l-2xl rounded-r-none sm:rounded-r-2xl">
+                            {pos.logo ? (
+                                <img
+                                        src={pos.logo}
+                                        alt={`${pos.org} logo`}
+                                        width={72}
+                                        height={72}
+                                        class="w-16 h-16 rounded-xl object-contain bg-white p-2 shadow-sm"
+                                />
+                            ) : (
+                                <div class="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center shadow-sm">
+                                    <Icon name={pos.icon} class="w-8 h-8 text-primary" />
+                                </div>
+                            )}
+                        </div>
+                        <CardContent className="flex-grow p-5 flex flex-col sm:flex-row sm:items-center justify-between w-full">
+                            <div class="flex-grow">
+                                <div class="mb-3">
+                                    <h4 class="text-xl font-semibold text-foreground font-alt mb-1">
+                                        {pos.url ? (
+                                            <a href={pos.url} target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-primary transition-colors">
+                                                {pos.org}
+                                            </a>
+                                        ) : (
+                                            pos.org
+                                        )}
+                                    </h4>
+                                    <p class="text-base text-foreground/85 mb-2">{pos.role}</p>
+                                    <span class="inline-block px-3 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20">
+                                        {pos.type}
+                                    </span>
+                                </div>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                                    <div class="flex items-center text-sm text-foreground/65">
+                                        <Icon name="lucide:map-pin" class="w-4 h-4 mr-2 text-primary/70" />
+                                        <span>{pos.location}</span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-foreground/65">
+                                        <Icon name="lucide:calendar" class="w-4 h-4 mr-2 text-signal/80" />
+                                        <span>{pos.period}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="highlights-toggle mt-4 sm:mt-0 text-primary hover:text-primary/80 transition-all duration-300 self-end bg-primary/10 hover:bg-primary/20 rounded-full p-3 hover:scale-105 group-hover:shadow-lg" data-index={index} aria-label="Toggle details">
+                                <Icon name="lucide:chevron-down" class="w-5 h-5 transition-transform duration-300 ease-in-out" />
+                            </button>
+                        </CardContent>
+                    </div>
+                    <div class="highlights-content hidden" data-index={index}>
+                        <div class="bg-gradient-to-br from-muted/25 to-muted/15 border-t border-muted/30">
+                            <CardContent className="p-5">
+                                <h5 class="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+                                    <Icon name="lucide:list-checks" class="w-4 h-4 text-primary" />
+                                    What I do
+                                </h5>
+                                <div class="grid gap-3">
+                                    {pos.highlights.map((task) => (
+                                            <div class="flex items-start p-3 bg-background/60 rounded-xl transition-all duration-300 hover:bg-primary/5 hover:shadow-sm group/item">
+                                                <div class="bg-primary/10 p-2 rounded-full mr-3 mt-0.5 group-hover/item:bg-primary/20 transition-colors duration-300">
+                                                    <Icon name={task.icon} class="w-4 h-4 text-primary" />
+                                                </div>
+                                                <p class="text-sm text-foreground/80 flex-1 leading-relaxed">{task.text}</p>
+                                            </div>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </div>
+                    </div>
+                </Card>
+        ))}
+    </div>
+</section>
+
+<style>
+    .highlights-content {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out;
+    }
+    .highlights-content.expanded {
+        max-height: 800px;
+        opacity: 1;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in;
+    }
+
+    .highlights-toggle {
+        min-width: 44px;
+        min-height: 44px;
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const toggles = document.querySelectorAll('.highlights-toggle');
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const index = toggle.getAttribute('data-index');
+                const content = document.querySelector(`.highlights-content[data-index="${index}"]`);
+                const icon = toggle.querySelector('svg');
+
+                if (content && icon) {
+                    content.classList.toggle('expanded');
+                    content.classList.toggle('hidden');
+                    icon.style.transform = content.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+            });
+        });
+    });
+</script>

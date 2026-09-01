@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+import Gallery from './Gallery.astro';
+import { community, communityIntro } from '../data/profile';
+---
+
+<section id="community" class="py-16">
+    <h3 class="text-4xl font-bold mb-6 text-foreground font-alt">Community & Outreach</h3>
+    <p class="max-w-2xl text-foreground/75 leading-relaxed mb-10">{communityIntro}</p>
+
+    <div class="space-y-6">
+        {community.map((item) => (
+            <details class="community-item group bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-lg border overflow-hidden transition-all duration-300 hover:shadow-xl">
+                <summary class="cursor-pointer list-none p-4 sm:p-6">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="flex w-full items-start gap-4">
+                            <div class="h-14 w-14 sm:h-16 sm:w-16 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Icon name="lucide:sprout" class="w-7 h-7 text-primary" />
+                            </div>
+                            <div class="min-w-0 flex-grow">
+                                <h4 class="text-lg sm:text-xl font-semibold text-foreground font-alt">{item.title}</h4>
+                                <p class="text-base sm:text-lg text-primary/80">{item.role}</p>
+                                {item.period && (
+                                    <div class="flex items-center text-xs sm:text-sm text-foreground/60 mt-2">
+                                        <Icon name="lucide:calendar" class="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2 text-signal/80" />
+                                        {item.period}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary/20">
+                            <Icon name="lucide:chevron-down" class="h-5 w-5 transition-transform duration-300 group-open:rotate-180" />
+                        </span>
+                    </div>
+                </summary>
+                <div class="border-t border-muted/30 bg-gradient-to-br from-muted/25 to-muted/15 px-4 pb-5 pt-4 sm:px-6 sm:pb-6">
+                    <ul class="grid gap-3 text-sm sm:text-base">
+                        {item.body.map((line) => (
+                            <li class="flex items-start gap-3 rounded-xl bg-background/60 p-3 text-foreground/80">
+                                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary/70"></span>
+                                <span>{line}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <Gallery images={item.images} />
+                </div>
+            </details>
+        ))}
+    </div>
+</section>
+
+<style>
+    .community-item summary::-webkit-details-marker {
+        display: none;
+    }
+</style>

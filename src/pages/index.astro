@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Navigation from '../components/Navigation.astro';
+import Research from '../components/Research.astro';
+import Positions from '../components/Positions.astro';
+import Publications from '../components/Publications.astro';
+import Talks from '../components/Talks.astro';
+import Awards from '../components/Awards.astro';
+import Teaching from '../components/Teaching.astro';
+import Certifications from '../components/Certifications.astro';
+import Education from '../components/Education.astro';
+import Community from '../components/Community.astro';
+import Footer from '../components/Footer';
+---
+
+<Layout>
+  <div class="container mx-auto px-4">
+    <Header />
+    <Hero />
+    <Navigation />
+    <Research />
+    <Positions />
+    <Publications />
+    <Talks />
+    <Awards />
+    <Teaching />
+    <Certifications />
+    <Education />
+    <Community />
+    <Footer client:load />
+  </div>
+</Layout>

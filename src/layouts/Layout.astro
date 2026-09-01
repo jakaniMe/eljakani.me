@@ -1,0 +1,209 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/globals.css';
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import { SEO } from "astro-seo";
+import { profile, meta } from '../data/profile';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  ogType?: string;
+  siteName?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const siteUrl = Astro.site?.href ?? "https://yassin-eljakani.me"; // set in astro.config.mjs
+
+const {
+  title = meta.siteTitle,
+  description = meta.description,
+  image = "/profile.jpg",
+  ogType = "website",
+  siteName = profile.displayName,
+  jsonLd
+} = Astro.props;
+
+const seoImage = new URL(image, siteUrl).toString();
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+
+const sameAs = Object.values(profile.links).filter((href) => href && href !== "#");
+
+const structuredData = jsonLd ?? [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: profile.displayName,
+    url: siteUrl,
+    image: seoImage,
+    jobTitle: "Assistant Professor",
+    worksFor: {
+      "@type": "CollegeOrUniversity",
+      name: "Université Ibn Zohr",
+    },
+    email: `mailto:${profile.email}`,
+    sameAs,
+    knowsAbout: meta.knowsAbout,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteUrl,
+    description,
+    inLanguage: "en",
+  }
+];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0e13" />
+  <SEO
+      title={title}
+      description={description}
+      canonical={canonicalUrl}
+      openGraph={{
+        basic: {
+          title: title,
+          type: ogType,
+          image: seoImage,
+          url: canonicalUrl,
+        },
+        image: {
+          url: seoImage,
+          alt: title,
+          type: "image/jpeg",
+        },
+        optional: {
+          siteName: siteName,
+          description: description,
+        },
+      }}
+      twitter={{
+        card: "summary",
+        title: title,
+        image: seoImage,
+        imageAlt: title,
+        description: description,
+      }}
+      extend={{
+        link: [
+          { rel: "icon", href: "/favicon.svg" },
+          { rel: "sitemap", href: "/sitemap-index.xml" },
+        ],
+        meta: [
+          { name: "generator", content: Astro.generator },
+          { name: "author", content: profile.displayName },
+        ],
+      }}
+  />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  <ClientRouter />
+  <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@300..800&display=swap" />
+  <script is:inline>
+    function getThemePreference() {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function setTheme(theme) {
+      if (theme === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+      window.localStorage.setItem('theme', theme);
+    }
+
+    setTheme(getThemePreference());
+
+    document.addEventListener('astro:after-swap', () => {
+      setTheme(getThemePreference());
+    });
+  </script>
+</head>
+<body class="min-h-screen bg-background font-sans antialiased">
+<div class="relative flex min-h-screen flex-col container mx-auto px-4 max-w-5xl">
+  <div class="flex-1">
+    <slot />
+  </div>
+</div>
+
+<!-- Shared lightbox for all photo galleries (talks & awards) -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lb-close" aria-label="Close">&times;</button>
+  <button class="lightbox-nav prev" id="lb-prev" aria-label="Previous">&#8249;</button>
+  <img id="lb-img" src="" alt="" />
+  <button class="lightbox-nav next" id="lb-next" aria-label="Next">&#8250;</button>
+</div>
+
+<script is:inline>
+  (function () {
+    var lb = document.getElementById("lightbox");
+    var img = document.getElementById("lb-img");
+    var closeBtn = document.getElementById("lb-close");
+    var prevBtn = document.getElementById("lb-prev");
+    var nextBtn = document.getElementById("lb-next");
+    if (!lb || !img) return;
+    var group = [];
+    var idx = 0;
+
+    function show(i) {
+      if (!group.length) return;
+      idx = (i + group.length) % group.length;
+      img.src = group[idx];
+      img.alt = "Photo " + (idx + 1) + " of " + group.length;
+    }
+    function open(srcs, start) {
+      group = srcs; show(start);
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function close() {
+      lb.classList.remove("open");
+      document.body.style.overflow = "";
+      img.src = "";
+    }
+
+    function bindGalleries() {
+      document.querySelectorAll("[data-gallery]").forEach(function (g) {
+        if (g.getAttribute("data-lb-bound") === "1") return;
+        g.setAttribute("data-lb-bound", "1");
+        var srcs = (g.getAttribute("data-gallery") || "").split("|").filter(Boolean);
+        g.querySelectorAll("[data-idx]").forEach(function (item) {
+          function activate() {
+            // skip tiles whose image failed to load (fallback placeholders)
+            if (item.getAttribute("data-missing") === "1") return;
+            open(srcs, parseInt(item.getAttribute("data-idx"), 10) || 0);
+          }
+          item.addEventListener("click", activate);
+          item.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }
+          });
+        });
+      });
+    }
+
+    bindGalleries();
+    document.addEventListener("astro:page-load", bindGalleries);
+
+    closeBtn.addEventListener("click", close);
+    prevBtn.addEventListener("click", function () { show(idx - 1); });
+    nextBtn.addEventListener("click", function () { show(idx + 1); });
+    lb.addEventListener("click", function (e) { if (e.target === lb) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") show(idx - 1);
+      if (e.key === "ArrowRight") show(idx + 1);
+    });
+  })();
+</script>
+</body>
+</html>

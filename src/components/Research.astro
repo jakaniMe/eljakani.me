@@ -1,0 +1,26 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import { Icon } from 'astro-icon/components';
+import { research } from '../data/profile';
+---
+
+<section id="research" class="py-16">
+    <h3 class="text-4xl font-bold mb-10 text-foreground font-alt">Research</h3>
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        {research.map((area) => (
+            <Card className="bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-lg border transition-all duration-300 hover:shadow-xl hover:border-primary/30">
+                <CardContent className="p-6">
+                    <div class="flex items-start gap-4">
+                        <div class="bg-primary/10 p-3 rounded-full shrink-0">
+                            <Icon name={area.icon} class="w-6 h-6 text-primary" />
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-foreground font-alt mb-2">{area.heading}</h4>
+                            <p class="text-sm text-foreground/75 leading-relaxed">{area.body}</p>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        ))}
+    </div>
+</section>

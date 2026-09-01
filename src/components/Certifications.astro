@@ -1,0 +1,37 @@
+---
+import { Icon } from 'astro-icon/components';
+import { certifications } from '../data/profile';
+---
+
+<section id="certifications" class="py-16">
+    <div class="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary/70">Credentials</p>
+            <h3 class="text-4xl font-bold text-foreground font-alt">Certifications</h3>
+        </div>
+        <div class="flex gap-3 text-sm text-foreground/70">
+            <span class="rounded-full border bg-background px-3 py-1.5">{certifications.length} credentials</span>
+            <span class="rounded-full border bg-background px-3 py-1.5">AI, Cloud, Networks</span>
+        </div>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {certifications.map((cert) => (
+            <article class="group flex items-start gap-3 rounded-2xl border bg-gradient-to-br from-background to-muted/25 p-4 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg">
+                <div class="bg-primary/10 p-2 rounded-full shrink-0 mt-0.5">
+                    <Icon name="lucide:badge-check" class="w-4 h-4 text-primary" />
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="text-sm font-medium text-foreground leading-snug">
+                        {cert.url ? (
+                            <a href={cert.url} target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-primary transition-colors">{cert.name}</a>
+                        ) : (
+                            cert.name
+                        )}
+                    </p>
+                    <p class="mt-1 text-xs text-foreground/60">{cert.issuer}</p>
+                </div>
+            </article>
+        ))}
+    </div>
+</section>

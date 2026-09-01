@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../imgs/profile.jpg';
+import { Icon } from 'astro-icon/components';
+import { Badge } from "@/components/ui/badge";
+import { profile, availability, highlights } from '../data/profile';
+---
+
+<div class="flex flex-row items-center justify-start gap-4 mt-4 md:mt-8">
+    <Image src={portrait} alt={profile.photoAlt} class="rounded-full w-32 h-32 object-cover ring-2 ring-point/40 ring-offset-4 ring-offset-background" loading="eager" />
+      <div class="flex flex-col items-center md:items-start justify-center ml-4">
+          <h1 class="font-alt text-start text-xl md:text-3xl font-light text-balance">Hi, <span class="font-bold">I'm Yassin El Jakani<span class="text-point">.</span></span> 👋</h1>
+          <h2 class="font-alt text-start text-lg md:text-3xl font-light text-balance">I bring <span class="text-point font-bold">&lt;AI/&gt;</span> to the edge, and I <span class="text-signal font-bold">teach</span> it.</h2>
+          <p class="hidden md:block text-sm text-muted-foreground mt-2">{profile.title} · {profile.location}</p>
+      </div>
+  </div>
+  <div class="my-4">
+      <p class="text-md md:text-xl font-light antialiased leading-2 md:leading-relaxed text-left text-balance">
+          {profile.tagline} Affiliated with {profile.affiliation.replace('Faculty of Sciences, ', 'the Faculty of Sciences at ')} — alongside research and teaching, I speak at developer conferences and help make digital skills accessible across Souss-Massa.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+          {highlights.map((h) => (
+              <span class="rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground">{h}</span>
+          ))}
+      </div>
+      <div class="mt-4">
+          <Badge
+              className="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15 cursor-pointer transition-colors duration-200 px-3 py-2 text-base font-medium flex items-center gap-2 w-fit"
+              id="collab-badge"
+          >
+              <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              {availability.badge}
+          </Badge>
+      </div>
+  </div>
+
+  <!-- Collaboration modal -->
+  <div id="collab-modal" class="fixed inset-0 bg-black/40 z-[60] hidden items-center justify-center p-4 sm:p-6">
+      <div class="bg-background border rounded-2xl shadow-lg max-w-lg w-full mx-auto max-h-[90vh] overflow-y-auto" id="modal-content">
+          <div class="p-4 sm:p-6">
+              <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2 font-alt">
+                      <Icon name="lucide:handshake" class="w-5 h-5 text-primary" />
+                      Let's collaborate
+                  </h3>
+                  <button id="close-modal" class="text-foreground/60 hover:text-foreground transition-colors p-1 rounded-full hover:bg-muted">
+                      <Icon name="lucide:x" class="w-5 h-5" />
+                  </button>
+              </div>
+
+              <div class="space-y-5">
+                  <div class="bg-muted/20 p-5 rounded-xl border">
+                      <div class="space-y-4">
+                          <div class="flex items-start gap-3">
+                              <div class="bg-primary/10 p-2 rounded-full mt-1">
+                                  <Icon name="lucide:flask-conical" class="w-4 h-4 text-primary" />
+                              </div>
+                              <div class="flex-1 min-w-0">
+                                  <p class="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-1">Open to</p>
+                                  <p class="text-sm text-foreground/85 leading-relaxed">{availability.lookingFor}</p>
+                              </div>
+                          </div>
+
+                          <div class="flex items-start gap-3">
+                              <div class="bg-primary/10 p-2 rounded-full mt-1">
+                                  <Icon name="lucide:cpu" class="w-4 h-4 text-primary" />
+                              </div>
+                              <div class="flex-1 min-w-0">
+                                  <p class="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-1">Focus</p>
+                                  <p class="text-sm text-foreground/85 leading-relaxed">{availability.focus}</p>
+                              </div>
+                          </div>
+
+                          <div class="flex items-start gap-3">
+                              <div class="bg-primary/10 p-2 rounded-full mt-1">
+                                  <Icon name="lucide:map-pin" class="w-4 h-4 text-primary" />
+                              </div>
+                              <div class="flex-1 min-w-0">
+                                  <p class="text-xs font-semibold text-foreground/60 uppercase tracking-wide mb-1">Location</p>
+                                  <p class="text-sm text-foreground/85 leading-relaxed">{availability.where}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="bg-gradient-to-br from-primary/5 to-primary/10 p-4 rounded-xl border border-primary/20">
+                      <p class="text-sm text-foreground/80 leading-relaxed">
+                          {availability.pitch}
+                      </p>
+                  </div>
+
+                  <div class="space-y-3">
+                      <h4 class="font-semibold text-foreground flex items-center gap-2 font-alt">
+                          <Icon name="lucide:mail" class="w-4 h-4 text-primary" />
+                          Get in touch
+                      </h4>
+                      <div class="grid gap-2">
+                          <a href={`mailto:${profile.email}`} class="flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-muted/50 transition-colors">
+                              <Icon name="lucide:mail" class="w-4 h-4 text-primary flex-shrink-0" />
+                              <span class="text-sm text-foreground/80 truncate">{profile.email}</span>
+                          </a>
+                          <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 p-3 bg-background border rounded-lg hover:bg-muted/50 transition-colors">
+                              <Icon name="lucide:linkedin" class="w-4 h-4 text-primary flex-shrink-0" />
+                              <span class="text-sm text-foreground/80">LinkedIn profile</span>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const badge = document.getElementById('collab-badge');
+        const modal = document.getElementById('collab-modal');
+        const closeButton = document.getElementById('close-modal');
+
+        function openModal() {
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+        }
+
+        badge?.addEventListener('click', openModal);
+        closeButton?.addEventListener('click', closeModal);
+
+        modal?.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    });
+</script>

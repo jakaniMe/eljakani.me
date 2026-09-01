@@ -1,0 +1,42 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import { Icon } from 'astro-icon/components';
+import { teaching, teachingStatement, teachingActivities } from '../data/profile';
+---
+
+<section id="teaching" class="py-16">
+    <h3 class="text-4xl font-bold mb-6 text-foreground font-alt">Teaching & Mentoring</h3>
+    <p class="max-w-2xl text-foreground/75 leading-relaxed mb-10">{teachingStatement}</p>
+
+    <div class="grid gap-6 md:grid-cols-2">
+        <div>
+            <h4 class="text-sm font-semibold uppercase tracking-wide text-primary/70 mb-4">Courses</h4>
+            <div class="space-y-3">
+                {teaching.map((t) => (
+                    <Card className="bg-gradient-to-br from-background to-muted/30 rounded-2xl border shadow-sm transition-all duration-300 hover:shadow-lg hover:border-primary/30">
+                        <CardContent className="p-4 flex items-center gap-3">
+                            <div class="bg-primary/10 p-2.5 rounded-full shrink-0">
+                                <Icon name="lucide:presentation" class="w-5 h-5 text-primary" />
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-base font-medium text-foreground font-alt">{t.course}</p>
+                                <p class="text-xs text-foreground/60">{t.where}</p>
+                            </div>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        </div>
+        <div>
+            <h4 class="text-sm font-semibold uppercase tracking-wide text-primary/70 mb-4">Beyond the classroom</h4>
+            <div class="space-y-3">
+                {teachingActivities.map((a) => (
+                    <div class="flex items-start gap-3 rounded-2xl border bg-background/60 p-4">
+                        <Icon name="lucide:arrow-right" class="w-4 h-4 mt-0.5 text-primary shrink-0" />
+                        <p class="text-sm leading-relaxed text-foreground/80">{a}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

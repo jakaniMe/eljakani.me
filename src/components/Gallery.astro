@@ -1,0 +1,23 @@
+---
+// Optional photo gallery. Pass `images` = array of filenames in public/images/.
+// If empty, renders nothing. Missing files degrade to a "photo soon" tile.
+interface Props { images: string[]; }
+const { images } = Astro.props;
+const dir = "/images/";
+const srcs = images.map((f) => (f.startsWith("/") ? f : dir + f));
+const dataAttr = srcs.join("|");
+---
+{srcs.length > 0 && (
+  <div class="gallery" data-gallery={dataAttr}>
+    {srcs.map((src, i) => (
+      <div class="gallery-item" data-idx={i} tabindex="0" role="button" aria-label="Open photo">
+        <img
+          src={src}
+          alt=""
+          loading="lazy"
+          onerror="this.parentElement.setAttribute('data-missing','1');this.outerHTML='<div class=&quot;img-fallback&quot;><span>photo soon</span></div>';"
+        />
+      </div>
+    ))}
+  </div>
+)}

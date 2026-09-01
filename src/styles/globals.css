@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Theme tokens — "paper & ink" palette with a violet accent.
+   Light mode: warm paper background. Dark mode: deep ink blue.
+   ============================================================ */
+@layer base {
+  :root {
+    --background: 48 24% 96%;        /* warm paper  #f7f6f2 */
+    --foreground: 222 16% 12%;       /* near-ink    #191c22 */
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 16% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 16% 12%;
+
+    --primary: 248 70% 55%;          /* violet */
+    --primary-foreground: 48 24% 98%;
+
+    --secondary: 46 21% 93%;
+    --secondary-foreground: 222 16% 12%;
+
+    --muted: 46 21% 91%;             /* paper-2  #f1efe9 */
+    --muted-foreground: 220 9% 37%;  /* #565c68 */
+
+    --accent: 46 21% 91%;
+    --accent-foreground: 222 16% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 12% 86%;
+    --input: 222 12% 86%;
+    --ring: 248 70% 55%;
+
+    --point: 248 74% 58%;            /* brand accent, darker for light bg */
+    --signal: 36 87% 45%;            /* amber #d4810f */
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 217 27% 6%;        /* ink      #0b0e13 */
+    --foreground: 220 23% 92%;       /* #e7eaf0 */
+
+    --card: 218 29% 11%;             /* ink-2    #141a24 */
+    --card-foreground: 220 23% 92%;
+
+    --popover: 218 29% 11%;
+    --popover-foreground: 220 23% 92%;
+
+    --primary: 247 100% 74%;         /* soft violet #a99dff */
+    --primary-foreground: 217 27% 8%;
+
+    --secondary: 218 25% 15%;
+    --secondary-foreground: 220 23% 92%;
+
+    --muted: 218 25% 15%;
+    --muted-foreground: 219 12% 59%; /* #8b93a3 */
+
+    --accent: 218 25% 17%;
+    --accent-foreground: 220 23% 92%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 219 20% 17%;
+    --input: 219 20% 17%;
+    --ring: 247 100% 74%;
+
+    --point: 247 100% 71%;           /* #7c6bff */
+    --signal: 36 85% 59%;            /* #f0a23c */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  ::selection {
+    background: hsl(var(--point));
+    color: hsl(var(--background));
+  }
+}
+
+/* ============================================================
+   Photo galleries (talks, awards) + shared lightbox.
+   Missing image files degrade into a "photo soon" tile, so you
+   can list photos in the data file before uploading them.
+   ============================================================ */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
+  margin-top: 1rem;
+}
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid hsl(var(--border));
+  cursor: pointer;
+  background: hsl(var(--muted));
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+.img-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: repeating-linear-gradient(
+    45deg,
+    hsl(var(--muted)),
+    hsl(var(--muted)) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+}
+.img-fallback span {
+  font-family: ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  place-items: center;
+  background: rgba(8, 10, 16, 0.92);
+  backdrop-filter: blur(6px);
+  padding: 2rem;
+}
+.lightbox.open {
+  display: grid;
+}
+.lightbox img {
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
+  border-radius: 10px;
+  object-fit: contain;
+}
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  background: rgba(8, 10, 16, 0.6);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.2s ease;
+}
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: hsl(var(--point));
+}
+.lightbox-close { top: 1.2rem; right: 1.2rem; }
+.lightbox-nav.prev { left: 1.2rem; top: 50%; transform: translateY(-50%); }
+.lightbox-nav.next { right: 1.2rem; top: 50%; transform: translateY(-50%); }

@@ -1,0 +1,69 @@
+---
+import { Card, CardContent } from '@/components/ui/card';
+import { Icon } from 'astro-icon/components';
+import { education } from '../data/profile';
+---
+
+<section id="education" class="py-16">
+    <h3 class="text-4xl font-bold mb-10 text-foreground font-alt">Education</h3>
+    <div class="space-y-6">
+        {education.map((edu) => (
+                <Card className="bg-gradient-to-br from-background to-muted/30 rounded-2xl shadow-lg border overflow-hidden transition-all duration-300 hover:shadow-xl">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-stretch">
+                        <div class="flex-shrink-0 w-full sm:w-auto sm:flex-grow-0 p-6 flex items-center justify-center bg-muted/20 rounded-r-none sm:rounded-r-2xl">
+                            {edu.logo ? (
+                                <img
+                                        src={edu.logo}
+                                        alt={`${edu.school} logo`}
+                                        width={120}
+                                        height={120}
+                                        class="w-20 h-20 sm:w-24 sm:h-24 object-contain bg-white rounded-xl p-2 shadow-sm"
+                                />
+                            ) : (
+                                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl bg-primary/10 flex items-center justify-center shadow-sm">
+                                    <Icon name="lucide:graduation-cap" class="w-10 h-10 text-primary" />
+                                </div>
+                            )}
+                        </div>
+                        <CardContent className="flex-grow p-6 w-full">
+                            <div class="mb-4">
+                                <h4 class="text-center sm:text-left text-xl font-semibold text-foreground font-alt mb-2">
+                                    {edu.schoolUrl ? (
+                                        <a href={edu.schoolUrl} target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-primary transition-colors">
+                                            {edu.school}
+                                        </a>
+                                    ) : (
+                                        edu.school
+                                    )}
+                                </h4>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-3 text-sm text-foreground/70">
+                                    <div class="flex items-center justify-center sm:justify-start gap-2">
+                                        <Icon name="lucide:map-pin" class="w-4 h-4 text-primary/70" />
+                                        <span>{edu.location}</span>
+                                    </div>
+                                    <div class="flex items-center justify-center sm:justify-start gap-2">
+                                        <Icon name="lucide:calendar" class="w-4 h-4 text-signal/80" />
+                                        <span>{edu.period}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-br from-muted/20 to-muted/10 p-4 rounded-xl">
+                                <div class="flex items-start gap-3">
+                                    <div class="bg-primary/10 p-2 rounded-full mt-0.5">
+                                        <Icon name="lucide:graduation-cap" class="w-5 h-5 text-primary" />
+                                    </div>
+                                    <div>
+                                        <h5 class="text-sm font-semibold text-foreground/90 mb-1">Degree</h5>
+                                        <p class="text-sm text-foreground/80 leading-relaxed">{edu.degree}</p>
+                                        {edu.note && (
+                                            <p class="mt-1.5 inline-block rounded-full bg-signal/10 border border-signal/30 px-2.5 py-0.5 text-xs font-medium text-signal">{edu.note}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </div>
+                </Card>
+        ))}
+    </div>
+</section>
