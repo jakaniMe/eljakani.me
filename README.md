@@ -1,4 +1,4 @@
-# yassin-eljakani.me — personal academic website
+# yassineljakani.com — personal academic website
 
 Personal website of **Dr. Yassin El Jakani** — Assistant Professor (Maître de
 Conférences) at the Faculty of Sciences, Université Ibn Zohr, Agadir.

@@ -3,10 +3,9 @@ import react from "@astrojs/react";
 import icon from "astro-icon";
 import sitemap from '@astrojs/sitemap';
 
-// TODO(input): replace with the real domain once you register it.
 // Sitemap, canonical URLs and social-card URLs are generated from this value.
 export default defineConfig({
-  site: 'https://yassin-eljakani.me',
+  site: 'https://yassineljakani.com',
   integrations: [
     react(),
     icon(),

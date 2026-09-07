@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
 
-# TODO(input): update the domain once astro.config.mjs has your real one
-Sitemap: https://yassin-eljakani.me/sitemap-index.xml
+Sitemap: https://yassineljakani.com/sitemap-index.xml
