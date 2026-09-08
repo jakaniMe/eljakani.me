@@ -1,5 +1,5 @@
 /* ============================================================================
-   SITE CONTENT — EDIT THIS FILE TO UPDATE THE WHOLE SITE.
+   SITE CONTENT, EDIT THIS FILE TO UPDATE THE WHOLE SITE.
    For normal content changes you should not need to touch any component.
 
    Search for "TODO(input)" to find every value waiting for you.
@@ -8,7 +8,7 @@
    the `images: [...]` arrays below (e.g. images: ["devoxx25-1.jpg"]).
    - Leave an images array empty  []  to show NO gallery for that item.
    - If a listed file is missing, a tasteful "photo soon" tile shows instead
-     of a broken image — so you can keep the data now and add photos later.
+     of a broken image, so you can keep the data now and add photos later.
 ============================================================================ */
 
 export const profile = {
@@ -18,12 +18,12 @@ export const profile = {
   affiliation: "Faculty of Sciences, Université Ibn Zohr · LabSIV",
   location: "Agadir, Morocco",
   tagline:
-    "I research at the intersection of artificial intelligence and the edge, building QoS-aware IoT and edge systems — and I teach what I learn.",
+    "I research at the intersection of artificial intelligence and the edge, building QoS-aware IoT and edge systems, and I teach what I learn.",
 
-  // src/imgs/profile.jpg — a square-ish portrait (yours is 1110×1148, perfect)
+  // src/imgs/profile.jpg, a square-ish portrait (yours is 1110×1148, perfect)
   photoAlt: "Portrait of Dr. Yassin El Jakani",
 
-  // public/cv.pdf — TODO(input): replace the placeholder PDF with your real CV
+  // public/cv.pdf, TODO(input): replace the placeholder PDF with your real CV
   cv: "/cv.pdf",
 
   // TODO(input): confirm this is the address you want published on the site.
@@ -31,7 +31,7 @@ export const profile = {
   email: "y.eljakani@uiz.ac.ma",
 
   links: {
-    // Social media: LinkedIn only for now — uncomment the others when ready.
+    // Social media: LinkedIn only for now, uncomment the others when ready.
     linkedin: "https://www.linkedin.com/in/yassin-el-jakani/",
     // github: "https://github.com/jakanime",                                    // TODO(later)
     // twitter: "https://x.com/YOUR_HANDLE",                                     // TODO(later)
@@ -45,21 +45,21 @@ export const profile = {
 
 /* --- Hero availability badge + collaboration modal ------------------------- */
 export const availability = {
-  badge: "Open to collaboration • Research · Speaking · Mentoring",
-  lookingFor: "Research collaboration, speaking invitations, and student mentoring",
-  focus: "Edge AI, IoT & 6G networks, QoS prediction, physical-layer security",
-  where: "Based in Agadir, Morocco — open to remote collaboration and travel",
+  badge: "Open to collaboration • Research · Speaking.",
+  lookingFor: "Research collaboration, consulting.",
+  focus: "Deep learning and Edge AI for Quality of service optimization in IoT networks.",
+  where: "Based in Agadir, Morocco, open to remote collaboration.",
   pitch:
-    "By day I lecture and supervise; by night I squeeze deep-learning models onto tiny devices. If you are organising a conference, running a lab, or building something at the edge — let's talk.",
+    "I lecture and supervise; and doing research using deep-learning models onto tiny devices. If you are organising a conference, running a lab, or building something at the edge, let's talk.",
 };
 
 /* Short badges under the hero. */
 export const highlights = [
   "PhD in AI & IoT",
   "Assistant Professor @ FS Agadir",
-  "Edge AI · IoT",
+  "Edge AI & IoT",
   "Conference Speaker",
-  "Sciences Pour Tous",
+  "volunteering at Sciencespourtous.net",
 ];
 
 /* --- Research areas --------------------------------------------------------- */
@@ -81,8 +81,8 @@ export const research: ResearchArea[] = [
     icon: "lucide:shield-check",
   },
   {
-    heading: "Federated learning & 6G / AIoT",
-    body: "Edge intelligence, federated learning, and semantic communication for the device–edge–core hierarchy of future AIoT and 6G networks.",
+    heading: "Federated learning & IoT",
+    body: "Edge intelligence, federated learning, and semantic communication for the device–edge–core hierarchy of IoT networks.",
     icon: "lucide:network",
   },
 ];
@@ -114,7 +114,7 @@ export const positions: Position[] = [
     period: "2025 - Present",
     highlights: [
       { text: "Teaching Python programming and C/C++ lab work at the Faculty of Sciences, and network management at ENSA Agadir", icon: "lucide:presentation" },
-      { text: "Research at LabSIV on Edge AI, federated learning, and QoS-aware IoT systems for future 6G / AIoT networks", icon: "lucide:flask-conical" },
+      { text: "Research at LabSIV on Edge AI, federated learning, and QoS-aware IoT systems", icon: "lucide:flask-conical" },
       { text: "Mentoring students and serving on graduation-project (PFE) juries", icon: "lucide:users-2" },
     ],
   },
@@ -127,7 +127,7 @@ export const positions: Position[] = [
     location: "Agadir, Morocco",
     period: "2021 - 2025",
     highlights: [
-      { text: "Thesis on deep learning and cross-layer parametric analyses for QoS prediction and security in IoT networks — defended June 2025 with distinction « Very Honorable »", icon: "lucide:scroll-text" },
+      { text: "Thesis on deep learning and cross-layer parametric analyses for QoS prediction and security in IoT networks, defended June 2025 with distinction « Very Honorable »", icon: "lucide:scroll-text" },
       { text: "First-author publications, including a Q1 journal paper in Elsevier's Ad Hoc Networks (~97% average R² across four QoS metrics)", icon: "lucide:file-badge" },
       { text: "Represented Morocco in Huawei ICT competitions and spoke at national developer conferences", icon: "lucide:megaphone" },
     ],
@@ -160,13 +160,13 @@ export const publications: Publication[] = [
       "Predicting diverse QoS metrics in IoT: An adaptive deep learning cross-layer approach for performance balancing",
     authors: "**Yassin El Jakani**, Abdellah Boulouz, Craig Thomson",
     abstract:
-      "Wireless sensor networks present dynamic challenges that require carefully balancing conflicting Quality-of-Service metrics. This work introduces novel application-layer control parameters working with a dynamic multi-layer perceptron and an adaptable Weighted Error Squared loss to maintain an optimal trade-off between SNR, Maximum Goodput, Energy Consumption, and Packet Delivery Ratio on IEEE 802.15.4 networks — reaching ~97% average R² (97/99/98/93% for SNR/PDR/MGP/EC). To our knowledge, it is the first integrated approach of its kind in WSNs.",
+      "Wireless sensor networks present dynamic challenges that require carefully balancing conflicting Quality-of-Service metrics. This work introduces novel application-layer control parameters working with a dynamic multi-layer perceptron and an adaptable Weighted Error Squared loss to maintain an optimal trade-off between SNR, Maximum Goodput, Energy Consumption, and Packet Delivery Ratio on IEEE 802.15.4 networks, reaching ~97% average R² (97/99/98/93% for SNR/PDR/MGP/EC). To our knowledge, it is the first integrated approach of its kind in WSNs.",
     badges: ["Q1", "First author", "IF 4.4 · CiteScore 10.2"],
     tags: ["Deep Learning", "IoT QoS", "IEEE 802.15.4", "Bayesian Optimization"],
     links: [{ type: "doi", href: "https://doi.org/10.1016/j.adhoc.2025.103769" }],
   },
   {
-    venue: "Springer — Advances in Machine Intelligence & CS Applications",
+    venue: "Springer, Advances in Machine Intelligence & CS Applications",
     year: "2023",
     kind: "Book chapter",
     title:
@@ -228,7 +228,7 @@ export const publications: Publication[] = [
 ];
 
 /* --- Talks & conferences -----------------------------------------------------
-   images: filenames inside public/images/ — leave [] for talks with no photos.
+   images: filenames inside public/images/, leave [] for talks with no photos.
 ---------------------------------------------------------------------------- */
 export type Talk = {
   year: string;
@@ -247,7 +247,7 @@ export const talks: Talk[] = [
     place: "Marrakech · Nov 2025",
     title: "Edge AI, Federated Learning, and IoT: Perfect Match?",
     blurb:
-      "Second time on the Devoxx stage — exploring the synergies between Edge AI, federated learning, and IoT at the edge.",
+      "Second time on the Devoxx stage, exploring the synergies between Edge AI, federated learning, and IoT at the edge.",
     images: ["devox20251.jfif", "devox20252.jfif", "devox20253.jfif"],
   },
   {
@@ -296,7 +296,7 @@ export type Prize = {
 export const prizes: Prize[] = [
   {
     year: "2025",
-    title: "PhD — distinction « Very Honorable »",
+    title: "PhD, distinction « Very Honorable »",
     org: "Faculty of Sciences, Université Ibn Zohr",
     detail:
       "Thesis: “Deep learning and parametric analyses applied to the Internet of Things: a cross-layer approach for QoS prediction and security in IoT networks.” Defended 21 June 2025.",
@@ -304,7 +304,7 @@ export const prizes: Prize[] = [
   },
   {
     year: "2022",
-    title: "First runner-up — Huawei Developer Competition, Northern Africa",
+    title: "First runner-up, Huawei Developer Competition, Northern Africa",
     org: "Huawei · Cairo ICT",
     detail:
       "Among 110+ academic and industry teams; top 11 in Northern Africa. An AI + cloud solution for education in Morocco, built with Said El Hachemy.",
@@ -312,7 +312,7 @@ export const prizes: Prize[] = [
   },
   {
     year: "2022",
-    title: "Huawei ICT Competition — Cloud Track, representing Morocco",
+    title: "Huawei ICT Competition, Cloud Track, representing Morocco",
     org: "Huawei ICT Academy · Université Ibn Zohr",
     detail:
       "Represented FS Agadir / UIZ in the Northern Africa regional phase across cloud, big data, and AI; recognised at the Digitech Ecosystem Summit (Skhirat).",
@@ -320,7 +320,7 @@ export const prizes: Prize[] = [
   },
   {
     year: "2022",
-    title: "Selected participant — Huawei Seeds for the Future (Morocco)",
+    title: "Selected participant, Huawei Seeds for the Future (Morocco)",
     org: "Huawei",
     detail:
       "Among the country's elite ICT talents. Tech4Good team “Goal Diggers” built an AI + IoT + Cloud assistant supporting people living with dementia.",
@@ -328,7 +328,7 @@ export const prizes: Prize[] = [
   },
   {
     year: "2023",
-    title: "Selected participant — MoroccoAI Summer School",
+    title: "Selected participant, MoroccoAI Summer School",
     org: "MoroccoAI × Al Akhawayn University",
     detail:
       "One of 50 selected from Morocco's AI community; hands-on work on LLMs for flipped learning (Transformers, NLP, TinyML, GNNs, federated learning).",
@@ -337,7 +337,7 @@ export const prizes: Prize[] = [
 ];
 
 /* --- Certifications ----------------------------------------------------------
-   `url` is optional — add credential links when you have them.
+   `url` is optional, add credential links when you have them.
 ---------------------------------------------------------------------------- */
 export type Cert = { name: string; issuer: string; url?: string };
 export const certifications: Cert[] = [
@@ -354,7 +354,7 @@ export const certifications: Cert[] = [
 
 /* --- Teaching ---------------------------------------------------------------- */
 export const teachingStatement =
-  "My teaching connects fundamentals with practice — moving students from concepts to implementation through programming, hands-on labs, projects, and real examples from AI, IoT, cloud, and cybersecurity.";
+  "My teaching connects fundamentals with practice, moving students from concepts to implementation through programming, hands-on labs, projects, and real examples from AI, IoT, cloud, and cybersecurity.";
 
 export const teaching = [
   { course: "Programmation Python", where: "Faculty of Sciences, Agadir" },
@@ -364,7 +364,7 @@ export const teaching = [
 
 export const teachingActivities = [
   "Student mentoring & graduation-project (PFE) juries at FS Agadir",
-  "Oracle campus tour — PFE pipeline & certification guidance",
+  "Oracle campus tour, PFE pipeline & certification guidance",
   "Huawei ICT Competition workshops & certification pathways",
 ];
 
@@ -387,7 +387,7 @@ export const education: Degree[] = [
     schoolUrl: "https://fsa.uiz.ac.ma/", // TODO(input): verify URL
     location: "Agadir, Morocco",
     period: "2021 - 2025",
-    degree: "PhD in Computer Science — Deep learning & cross-layer analyses for QoS prediction and security in IoT networks",
+    degree: "PhD in Computer Science, Deep learning & cross-layer analyses for QoS prediction and security in IoT networks",
     note: "Distinction « Very Honorable » · defended 21 June 2025",
   },
   // TODO(input): add your earlier degrees, e.g.:
@@ -410,14 +410,14 @@ export type Community = {
 };
 
 export const communityIntro =
-  "Through Sciences Pour Tous, I help run volunteer-driven programs that bring coding, robotics, and scientific orientation to young learners — across Agadir, Tafraout, Aoulouz, Ouijane and the wider Souss-Massa region.";
+  "Through Sciences Pour Tous, I help run volunteer-driven programs that bring coding, robotics, and scientific orientation to young learners.";
 
 export const community: Community[] = [
   {
     title: "Youth Coding Days",
     role: "Mentor & organiser",
     body: [
-      "Multiple editions across Souss-Massa (Aoulouz, Ouijane/Tiznit, CISM) teaching Python, C, Arduino and robotics to young learners — free, with certificates.",
+      "Multiple editions across Souss-Massa (Aoulouz, Ouijane/Tiznit, CISM) teaching Python, C, Arduino and robotics to young learners, free, with certificates.",
     ],
     images: [],
   },
@@ -433,7 +433,7 @@ export const community: Community[] = [
     title: "Caravane du Numérique",
     role: "Contributor",
     body: [
-      "Coding workshops and educational orientation carried to the Ammelne valley and Tafraout region, democratising digital skills beyond major cities.",
+      "Coding workshops and educational orientation, democratising digital skills beyond major cities.",
     ],
     images: [],
   },
@@ -451,7 +451,7 @@ export const community: Community[] = [
 export const meta = {
   siteTitle: "Yassin El Jakani - Assistant Professor · Edge AI & IoT",
   description:
-    "Dr. Yassin El Jakani — Assistant Professor at Université Ibn Zohr, Agadir. Research on Edge AI, lightweight deep learning, IoT & physical-layer security, and network QoS.",
+    "Dr. Yassin El Jakani, Assistant Professor at Université Ibn Zohr, Agadir. Research on Edge AI, lightweight deep learning, IoT & physical-layer security, and network QoS.",
   knowsAbout: [
     "Artificial Intelligence",
     "Edge Computing",

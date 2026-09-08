@@ -9,14 +9,14 @@ import { profile, availability, highlights } from '../data/profile';
 <div class="flex flex-row items-center justify-start gap-4 mt-4 md:mt-8">
     <Image src={portrait} alt={profile.photoAlt} class="rounded-full w-32 h-32 object-cover ring-2 ring-point/40 ring-offset-4 ring-offset-background" loading="eager" />
       <div class="flex flex-col items-center md:items-start justify-center ml-4">
-          <h1 class="font-alt text-start text-xl md:text-3xl font-light text-balance">Hi, <span class="font-bold">I'm Yassin El Jakani<span class="text-point">.</span></span> 👋</h1>
+          <h1 class="font-alt text-start text-xl md:text-3xl font-light text-balance">Hi, <span class="font-bold">I'm Yassin El Jakani<span class="text-point">.</span></span> </h1>
           <h2 class="font-alt text-start text-lg md:text-3xl font-light text-balance">I bring <span class="text-point font-bold">&lt;AI/&gt;</span> to the edge, and I <span class="text-signal font-bold">teach</span> it.</h2>
           <p class="hidden md:block text-sm text-muted-foreground mt-2">{profile.title} · {profile.location}</p>
       </div>
   </div>
   <div class="my-4">
       <p class="text-md md:text-xl font-light antialiased leading-2 md:leading-relaxed text-left text-balance">
-          {profile.tagline} Affiliated with {profile.affiliation.replace('Faculty of Sciences, ', 'the Faculty of Sciences at ')} — alongside research and teaching, I speak at developer conferences and help make digital skills accessible across Souss-Massa.
+          {profile.tagline} Affiliated with {profile.affiliation.replace('Faculty of Sciences, ', 'the Faculty of Sciences at ')} . Alongside research and teaching, I speak at developer conferences and help make digital skills accessible across Souss-Massa.
       </p>
       <div class="mt-4 flex flex-wrap gap-2">
           {highlights.map((h) => (

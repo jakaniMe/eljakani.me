@@ -35,7 +35,7 @@ const Footer: React.FC = () => {
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex flex-col items-center md:items-start">
                         <a href="/"><h2 className="text-2xl font-bold font-alt mb-2">Yassin El Jakani<span className="text-point">.</span></h2></a>
-                        <p className="text-sm text-center md:text-start text-muted-foreground">Bringing AI to the edge — in research, in class, and in community.</p>
+                        <p className="text-sm text-center md:text-start text-muted-foreground">Bringing AI to the edge in research, in class, and in community.</p>
                     </div>
 
                     <div className="flex flex-col items-center md:items-end">
@@ -69,12 +69,12 @@ const Footer: React.FC = () => {
                 </div>
 
                 <div className="text-center text-xs text-muted-foreground mt-4 font-alt">
-                    &copy; {new Date().getFullYear()} Dr. Yassin El Jakani. All rights reserved.
+                    &copy; {new Date().getFullYear()} Dr. Yassin El Jakani. All rights reserved
                     <span className="mx-1">·</span>
-                    Design adapted from an open-source site by{' '}
-                    <a href="https://github.com/Eljakani/eljakani.me" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
-                        Yassine El Jakani
-                    </a>
+                    {/* Design adapted from an open-source site by{' '} */}
+                    {/* <a href="https://github.com/Eljakani/eljakani.me" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary"> */}
+                        {/* Yassine El Jakani
+                    </a> */}
                 </div>
             </div>
 

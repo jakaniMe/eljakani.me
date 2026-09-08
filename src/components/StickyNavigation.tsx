@@ -97,14 +97,14 @@ const StickyNavigation: React.FC<StickyNavigationProps> = ({ navItems }) => {
                   }
                 }}
               >
-                {IconComponent && <IconComponent size={20} />}
+                {IconComponent && <IconComponent size={30} />}
                 <span className="text-sm hidden xl:block">{item.label}</span>
               </Button>
             );
           })}
         </div>
         <div className="text-end p-1 font-alt hidden md:block">
-          <span className="text-lg font-bold whitespace-nowrap">Y. El Jakani<span className="text-point">.</span></span>
+          {/* <span className="text-lg font-bold whitespace-nowrap">Y. El Jakani<span className="text-point">.</span></span> */}
         </div>
       </div>
     </nav>
