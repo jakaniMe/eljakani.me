@@ -1,0 +1,405 @@
+/* Amiri Quran (SIL Open Font License, see fonts/OFL.txt): renders all Uthmani marks. */
+@font-face {
+  font-family: "Amiri Quran";
+  src: url("./fonts/AmiriQuran-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  --bg: #0b0f14;
+  --card: #121821;
+  --ink: #e8eef5;
+  --muted: #9bb0c9;
+  --accent: #00d3a7;
+  --accent-weak: rgba(0, 211, 167, .18);
+  --warn: #e0a800;
+  --active: #3b82f6;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui;
+  background: var(--bg);
+  color: var(--ink);
+  margin: 0;
+  display: flex;
+  /* Sidebar Layout */
+  height: 100vh;
+  overflow: hidden;
+}
+
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 10px;
+  background: #0f1520;
+  /* width: 260px; */
+  flex-shrink: 0;
+  border-right: 1px solid #233047;
+  overflow-y: auto;
+}
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #586981;
+  font-weight: bold;
+}
+
+main {
+  flex: 1;
+  max-width: none;
+  /* remove limit */
+  margin: 0;
+  padding: 2rem;
+  overflow-y: auto;
+  position: relative;
+}
+
+select,
+button {
+  background: #0f1729;
+  color: var(--ink);
+  border: 1px solid #233047;
+  border-radius: .6rem;
+  padding: .55rem .8rem
+}
+
+button.primary {
+  border-color: var(--active)
+}
+
+main {
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 0 1rem
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 320px;
+  /* Widen Mushaf, fixed sidebar width */
+  height: 100%;
+  /* Fill main */
+  align-items: start;
+}
+
+#mushafPanel {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  height: 100%;
+  /* Request to be fixed with screen height */
+}
+
+/* Ensure the layout card fills the panel if content is short */
+.mushaf-layout {
+  flex: 1;
+  min-height: 100%;
+}
+
+.ayah-card {
+  background: var(--card);
+  border: 1px solid #1d2736;
+  border-radius: 1rem;
+  padding: 1rem
+}
+
+.ayah-head {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .5rem;
+  color: var(--muted)
+}
+
+.ayah-number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: #0f1729;
+  border: 1px solid #26344b
+}
+
+.tokens {
+  font-size: 1.35rem;
+  line-height: 2.35rem;
+  text-align: right;
+  word-wrap: wrap
+}
+
+.token {
+  color: black;
+  padding: .15rem .25rem;
+  border-radius: .5rem;
+  transition: background .12s ease, text-decoration-color .12s ease
+}
+
+.token.active {
+  outline: 2px solid var(--active);
+  outline-offset: 2px
+}
+
+/* Heard, still being checked (not final yet) */
+.token.confirmed {
+  background: rgba(59, 130, 246, 0.14)
+}
+
+.token.low {
+  text-decoration: underline dotted var(--warn) 2px
+}
+
+/* Mistake Classification Styles */
+.token.status-match {
+  background-color: rgba(0, 211, 167, 0.2);
+  /* Greenish */
+  color: black;
+}
+
+.token.status-substitution {
+  background-color: rgba(239, 68, 68, 0.2);
+  /* Reddish */
+  color: #b91c1c;
+}
+
+
+
+.token.status-deletion {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  text-decoration: line-through;
+}
+
+.token.status-insertion {
+  background-color: rgba(249, 115, 22, 0.2);
+  /* Orange */
+  color: #c2410c;
+}
+
+
+
+
+.panel {
+  background: var(--card);
+  border: 1px solid #1d2736;
+  border-radius: 1rem;
+  padding: 1rem
+}
+
+.small {
+  color: var(--muted);
+  font-size: .9rem
+}
+
+.kv {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: .35rem .75rem
+}
+
+.kv b {
+  color: var(--ink)
+}
+
+#log {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  line-height: 1.35rem;
+  background: #0f1729;
+  border: 1px solid #233047;
+  border-radius: .6rem;
+  padding: .6rem;
+  height: 220px;
+  overflow: auto
+}
+
+/* Legend Styles */
+.legend-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.legend-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* Reuse existing status classes for boxes */
+.legend-box.status-match {
+  background-color: rgba(0, 211, 167, 0.6);
+  border: 1px solid rgba(0, 211, 167, 0.8);
+}
+
+
+
+.legend-box.status-substitution {
+  background-color: rgba(239, 68, 68, 0.6);
+  border: 1px solid rgba(239, 68, 68, 0.8);
+}
+
+.legend-box.status-deletion {
+  background-color: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  position: relative;
+}
+
+.legend-box.status-deletion::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ef4444;
+}
+
+.legend-box.confirmed {
+  background-color: rgba(59, 130, 246, 0.35);
+  border: 1px solid rgba(59, 130, 246, 0.6);
+}
+
+.legend-box.status-insertion {
+  background-color: rgba(249, 115, 22, 0.6);
+  border: 1px solid rgba(249, 115, 22, 0.8);
+}
+
+/* Modal Styles */
+dialog.modal {
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  max-width: 500px;
+  width: 90%;
+}
+
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: black;
+}
+
+.modal-content h2 {
+  margin: 0;
+  color: var(--primary-gold);
+  text-align: center;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-size: 0.95rem;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.verse-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 1rem;
+  padding-right: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.verse-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.verse-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.verse-id {
+  font-weight: bold;
+  color: var(--primary-gold);
+}
+
+.verse-stats {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.stat-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+#hypText {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  direction: rtl;
+}

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Qur’ān Recitation Checker</title>
+  <link rel="stylesheet" href="./styles.css?v=20261029" />
+  <style>
+    .status-idle {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .status-loading {
+      background-color: #ffc107;
+      color: black;
+      cursor: wait;
+    }
+
+    .status-recording {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .status-error {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    #micBtn {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    /* Alignment Status Colors */
+    .token.status-match {
+      color: #28a745;
+    }
+
+    /* Green */
+    .token.status-substitution {
+      color: #fd7e14;
+      text-decoration: underline wavy;
+    }
+
+    /* Orange */
+    .token.status-deletion {
+      color: #dc3545;
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    /* Red */
+    .token.status-insertion {
+      color: #6f42c1;
+    }
+
+    /* Purple (if we ever render them) */
+    .token.status-pending {
+      color: inherit;
+    }
+
+    /* Mushaf Layout */
+    .mushaf-layout {
+      direction: rtl;
+      text-align: justify;
+      font-family: "Amiri Quran", "Amiri", "Traditional Arabic", serif;
+      font-size: 1.8rem;
+      line-height: 2.3;
+      padding: 1rem;
+      background: #ffffff;
+      /* White panel */
+      color: #000000;
+      /* Black text */
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .ayah-span {
+      display: inline;
+    }
+
+    .ayah-marker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      margin: 0 0.3rem;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Cpath fill='%23D4AF37' d='M18 2C9.163 2 2 9.163 2 18s7.163 16 16 16 16-7.163 16-16S26.837 2 18 2zm0 30C10.268 32 4 25.732 4 18S10.268 4 18 4s14 6.268 14 14-6.268 14-14 14z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-size: 0.9rem;
+      color: #000000;
+      /* Black marker number */
+      vertical-align: middle;
+      font-weight: bold;
+    }
+
+    .surah-separator {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0 1rem 0;
+      width: 100%;
+    }
+
+    .surah-frame {
+      position: relative;
+      background-color: #fdf6e3;
+      /* Light parchment */
+      background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20.5V18H0v-2h20v-2H0v-2h20v-2H0V8h20V6H0V4h20V2H0V0h22v20h2V0h2v20h2V0h2v20h2V0h2v20h2v2H22v18h-2v-2h-2v2h-2v-2h-2v2h-2v-2h-2v2h-2v-2h-2v2H0v-2h20v-2H0v-2h20v-2H0v-2h20z' fill='%23d4af37' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+      border: 3px double #8b5a2b;
+      /* Wood brown double border */
+      border-radius: 15px;
+      /* padding: 0.8rem 3rem; */
+      font-family: "Amiri", serif;
+      /* font-size: 2.2rem; */
+      color: #3e2723;
+      /* Dark wood color */
+      box-shadow:
+        inset 0 0 20px rgba(139, 90, 43, 0.2),
+        0 4px 6px rgba(0, 0, 0, 0.15);
+      /* min-width: 300px; */
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Decorative side elements to simulate handle/ornament */
+    .surah-frame::before,
+    .surah-frame::after {
+      content: "۞";
+      font-size: 1.5rem;
+      color: #8b5a2b;
+      margin: 0 1rem;
+      opacity: 0.8;
+    }
+
+    /* Page Navigation */
+    .page-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 0.5rem 0;
+      padding-top: 0.5rem;
+      border-top: 1px solid #233047;
+      /* logic from styles.css borders */
+      width: 100%;
+    }
+
+    .page-nav label {
+      color: #9bb0c9;
+      /* var(--muted) fallback */
+      font-weight: bold;
+    }
+
+    .page-nav input {
+      background: #0f1729;
+      border: 1px solid #233047;
+      color: #e8eef5;
+      /* var(--ink) */
+      border-radius: 0.4rem;
+      padding: 0.4rem;
+      width: 4rem;
+      text-align: center;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <aside id="sidebar">
+    <!-- Branding / Status -->
+    <div style="padding-bottom: 1rem; border-bottom: 1px solid #233047;">
+      <h2 style="margin:0; font-size: 1.2rem; color: #fff;">Qur’ān ASR</h2>
+      <div id="status" class="status-line" style="margin-top: 0.5rem; font-size: 0.8rem;">Idle</div>
+    </div>
+
+    <!-- Navigation Group -->
+    <div class="sidebar-group">
+      <div class="sidebar-label">Navigation</div>
+      <select id="surah" style="width: 100%;"></select>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <label for="ayah" style="font-size: 0.9rem;">Ayah:</label>
+        <input id="ayah" type="number" value="1" style="flex:1" />
+        <button id="nextBtn" class="nav-btn" title="Next Ayah" style="padding: 0.5rem;">⏩</button>
+      </div>
+    </div>
+
+    <!-- Recitation Group -->
+    <div class="sidebar-group">
+      <div class="sidebar-label">Recitation</div>
+      <button id="micBtn" class="status-idle" style="width: 100%; justify-content: center;">🎤 Start</button>
+      <select id="profileSelect" title="Sensitivity Profile" style="width: 100%;">
+        <option value="easy">Profile: Easy</option>
+        <option value="medium" selected>Profile: Medium</option>
+        <option value="strict">Profile: Strict</option>
+      </select>
+    </div>
+
+    <!-- Tools Group -->
+    <div class="sidebar-group">
+      <div class="sidebar-label">Tools</div>
+      <button id="toggleAdvanceBtn" class="btn secondary" style="width: 100%; text-align: left;">🔄
+        Auto-Advance</button>
+      <button id="clearTagsBtn" class="btn secondary" style="width: 100%; text-align: left;">🧹 Clear Tags</button>
+      <button id="showSummaryBtn" class="btn secondary" style="width: 100%; text-align: left; display: none;">📊 Session
+        Summary</button>
+      <button id="apiKeyBtn" class="btn secondary" style="width: 100%; text-align: left;">🔑 API Key</button>
+    </div>
+  </aside>
+
+  <main class="grid">
+    <section>
+      <div id="mushafPanel"></div>
+    </section>
+
+    <aside class="panel">
+      <h3>Live Details</h3>
+      <div class="kv small" style="margin-bottom:.5rem">
+        <span>Temporary Text:</span><b id="hypText">—</b>
+        <span>Ayah Match:</span><b id="scoreLine">—</b>
+        <span>Model Confidence:</span><b id="confScore">—</b>
+        <span>Accuracy (Tokens):</span>
+        <b><span id="accPct">0.0</span>% — <span id="accMatch">0</span>/<span id="accTotal">0</span></b>
+        <span>Comments:</span><span class="small">Words are first lightly highlighted while being checked, then coloured once final. Hover a word for what was heard. Dotted underline = the ASR was unsure.</span>
+      </div>
+
+      <div class="panel">
+        <h3
+          style="margin-top:0; color:var(--muted); font-size:0.9rem; text-transform:uppercase; letter-spacing:0.05em;">
+          Legend</h3>
+        <div class="legend-sidebar">
+          <div class="legend-item"><span class="legend-box confirmed"></span> Checking </div>
+          <div class="legend-item"><span class="legend-box status-match"></span> Correct </div>
+          <div class="legend-item"><span class="legend-box status-substitution"></span> Wrong Word</div>
+          <div class="legend-item"><span class="legend-box status-deletion"></span> Skipped Word</div>
+          <div class="legend-item"><span class="legend-box status-insertion"></span> Extra Word</div>
+        </div>
+      </div>
+
+      <h4 class="small" style="margin-top:1rem">History</h4>
+      <div id="log"></div>
+    </aside>
+  </main>
+
+  <dialog id="summaryModal" class="modal">
+    <div class="modal-content">
+      <h2>Session Summary</h2>
+      <div id="summaryDetails"></div>
+      <div class="modal-actions">
+        <button id="closeSummaryBtn" class="btn primary">Close</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="ayahDetailModal" class="modal">
+    <div class="modal-content">
+      <h2 id="ayahDetailTitle">Ayah Detail</h2>
+      <div id="ayahDetailContent" class="mushaf-layout" style="font-size: 1.5rem; text-align: center; margin: 1rem 0;">
+      </div>
+      <div id="ayahDetailStats" class="summary-grid"></div>
+      <div class="modal-actions">
+        <button id="closeAyahDetailBtn" class="btn primary">Back</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="./main.js?v=20261029"></script>
+</body>
+
+</html>

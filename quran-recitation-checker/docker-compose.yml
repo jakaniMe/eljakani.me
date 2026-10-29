@@ -1,0 +1,23 @@
+services:
+  quran-api:
+    build: .
+    container_name: quran-api
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - ./models:/app/models   # downloaded ASR model lives here (kept between restarts)
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+    restart: unless-stopped
+
+  quran-web:
+    image: nginx:alpine
+    container_name: quran-web
+    ports:
+      - "5500:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    restart: unless-stopped
